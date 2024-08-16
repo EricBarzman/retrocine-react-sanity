@@ -9,9 +9,7 @@ function Search() {
   const [movies, setMovies] = useState([]);
 
   useEffect(()=> {
-    axios
-      .post('movies/search/', { 'searchInput': searchInput})
-      .then(response => setMovies(response.data))
+    getMovieFromSearch(searchInput).then(result => setMovies(result));
   }, [searchInput])
 
   return (

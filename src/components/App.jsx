@@ -20,18 +20,20 @@ import Search from '@/components/Movies/Search/Search';
 
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 export default function App() {
 
-  // Check if user is logged first
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user)
   const { logged } = user;
 
+  // Check if user is logged first, or get favorites
   useEffect(() => {
     if (!logged) navigate('/login')
+    dispatch({ type: 'FETCH_FAVORITES' });
   }, [])
 
   const location = useLocation();

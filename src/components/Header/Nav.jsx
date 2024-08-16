@@ -43,23 +43,23 @@ function Nav() {
             {/* Search options */}
             <ul className="hidden md:flex ml-4 md:text-sm lg:text-base items-center justify-between">
             
-                <li className="font-light px-4 hover:-translate-y-2 duration-500 transition-all">
+                <li className="font-light px-4 hover:-translate-y-1 duration-500 transition-all">
                     <Link to='/'>Home</Link>
                 </li>
 
-                <li className="font-light px-4 hover:-translate-y-2 duration-500 transition-all">
+                <li className="font-light px-4 hover:-translate-y-1 duration-500 transition-all">
                     <Link to='/movies'>Movies</Link>
                 </li>
             
-                <li className="font-light px-4 hover:-translate-y-2 duration-500 transition-all">
+                <li className="font-light px-4 hover:-translate-y-1 duration-500 transition-all">
                     <Link to='/pick-of-the-week'>Pick of the week</Link>
                 </li>
             
-                <li className="font-light px-4 hover:-translate-y-2 duration-500 transition-all">
+                <li className="font-light px-4 hover:-translate-y-1 duration-500 transition-all">
                     <Link to='/popular'>Popular</Link>
                 </li>
             
-                <li className="font-light px-4 hover:-translate-y-2 duration-500 transition-all">
+                <li className="font-light px-4 hover:-translate-y-1 duration-500 transition-all">
                     <Link to='/my-favorites'>My favorites</Link>
                 </li>
             </ul>

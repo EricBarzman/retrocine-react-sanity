@@ -171,6 +171,14 @@ export async function getMoviesByCountry(countryId) {
   );
 }
 
+export async function getMoviesFromSearch(searchInput) {
+  return await sanityClient.fetch(
+    queries.getMoviesFromSearchQuery,
+    { searchInput },
+    { cache: "no-cache" }
+  );
+}
+
 export async function getMovieBySlug(slug) {
   return await sanityClient.fetch(
     queries.getMovieBySlug,
@@ -213,5 +221,25 @@ export async function createUserFavorite(userId, movieId) {
 
 
 export async function deleteUserFavorite(favoriteId) {
-  await sanityClient.delete(favoriteId);
+  const mutation = {
+    mutations: [
+      {
+        delete: {
+          id: favoriteId
+        },
+      },
+    ],
+  };
+
+  const { data } = await axios.post(
+    `https://${import.meta.env.VITE_APP_SANITY_PROJECT_ID}.api.sanity.io/v2023-05-03/data/mutate/${import.meta.env.VITE_APP_SANITY_DATASET}`,
+    mutation,
+    {
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_APP_SANITY_API_TOKEN}`,
+      },
+    }
+  );
+
+  return data;
 }

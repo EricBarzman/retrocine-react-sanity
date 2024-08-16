@@ -22,7 +22,7 @@ function MovieCard({ movie }) {
   
 
   useEffect(() => {
-    const foundFavorite = my_favorites.some((favorite) => favorite.movie._id === movie._id)
+    const foundFavorite = my_favorites.find((favorite) => favorite.movie._id === movie._id)
     if (foundFavorite) {
       setIsFavorite(true);
       setFavoriteId(foundFavorite._id);
@@ -35,7 +35,7 @@ function MovieCard({ movie }) {
       .then(() => {
         toast.success('Added to my favorites');
         setIsFavorite(true);
-        dispatch({ type: 'FETCH_FAVORITES' });        
+        dispatch({ type: 'FETCH_FAVORITES' });
       })
 
       .catch(() => {
@@ -45,8 +45,6 @@ function MovieCard({ movie }) {
 
 
   function removeFromMyFavorites() {
-    console.log(favoriteId);
-    
     deleteUserFavorite(favoriteId)
       .then(() => {
         toast.success('Removed from my favorites');

@@ -6,9 +6,8 @@ import toast from "react-hot-toast";
 import { auth } from '@/firebase/firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
-import { getAvatars, createUser } from "@/lib/apis";
-import { updateToken, updateUserId } from '@/store/userSlice';
-
+import { getAvatars, createUser, getUserInfo } from "@/lib/apis";
+import { updateToken, updateUserId, updateSanityUserId } from '@/store/userSlice';
 
 function Signup() {
 
@@ -66,9 +65,19 @@ function Signup() {
       try {  
         // Register on Firebase
         const result = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-        
+        const firebaseUserId = result.user.uid
         // Create a user in Sanity
-        await createUser({ firebaseId: result.user.uid, ...formData })
+        await createUser({ firebaseId: firebaseUserId, ...formData })
+
+        const token = result.user.accessToken
+        dispatch(updateToken(token));
+        dispatch(updateUserId({ firebaseUserId }));
+        
+        const user = await getUserInfo(firebaseUserId);
+        dispatch(updateSanityUserId({ sanityUserId: user._id }));
+        dispatch({ type: 'FETCH_FAVORITES' });
+
+        navigate('/')
 
         // Store token
         dispatch(updateToken(result.user.accessToken));
