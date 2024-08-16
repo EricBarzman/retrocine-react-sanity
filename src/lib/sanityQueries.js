@@ -28,6 +28,18 @@ export const getUserFavoritesQuery = `*[_type == "user_favorite" && user._ref ==
     },
 }`
 
+
+export const getUserVoteForMovieQuery = `*[_type == "vote" && created_by._ref == $userId && movie._ref == $movieId] {
+    _id,
+    comment,
+    rating,
+    created_by,
+    movie->{
+        _id,
+        title,
+    },
+}`
+
 export const getTopicsQuery = `*[_type == "topic"] {
     _id,
     label,

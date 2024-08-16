@@ -243,3 +243,45 @@ export async function deleteUserFavorite(favoriteId) {
 
   return data;
 }
+
+export async function getUserVoteForMovie({ userId, movieId }) {
+  return await sanityClient.fetch(
+    queries.getUserVoteForMovieQuery,
+    { userId, movieId },
+    { cache: "no-cache" }
+  );
+}
+
+export async function createUserVoteForMovie({ userId, movieId, rating, comment }) {
+  const mutation = {
+    mutations: [
+      {
+        create: {
+          _type: "vote",
+          created_by: {
+            _type: "reference",
+            _ref: userId,
+          },
+          movie: {
+            _type: "reference",
+            _ref: movieId,
+          },
+          rating,
+          comment,
+        },
+      },
+    ],
+  };
+
+  const { data } = await axios.post(
+    `https://${import.meta.env.VITE_APP_SANITY_PROJECT_ID}.api.sanity.io/v2023-05-03/data/mutate/${import.meta.env.VITE_APP_SANITY_DATASET}`,
+    mutation,
+    {
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_APP_SANITY_API_TOKEN}`,
+      },
+    }
+  );
+
+  return data;
+}

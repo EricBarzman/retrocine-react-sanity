@@ -1,14 +1,17 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
-import axios from '@/lib/axios';
 import toast from "react-hot-toast";
 import { BsStarFill } from "react-icons/bs";
+import { createUserVoteForMovie, getUserVoteForMovie } from "../../../lib/apis";
+import { useSelector } from "react-redux";
 
 export default function RateMovieModal({ movie, isRateMovieModalOpen, setIsRateMovieModalOpen }) {
 
     const [rating, setRating] = useState(1);
     const [comment, setComment] = useState('');
     const startValues = [1, 2, 3, 4, 5];
+
+    const user = useSelector((state) => state.user)
 
     const toggleRatingModal = () => {
         setIsRateMovieModalOpen(!isRateMovieModalOpen);
@@ -17,11 +20,21 @@ export default function RateMovieModal({ movie, isRateMovieModalOpen, setIsRateM
     };
 
     async function submitVote() {
-        await axios.post(`users/vote-for-movie/${movie.id}`, { comment, rating })
-            .then((response) => {
-                console.log(response.data);
-                toast.success('Vote sent!');
-            })
+        try {
+            const vote = await getUserVoteForMovie({ userId : user.sanityUserId, movieId: movie._id });
+            console.log("vote");
+            console.log(vote);
+            if (vote) {
+                toast.error("You already rated this movie.")
+                return 0
+            } 
+            await createUserVoteForMovie({ userId : user.sanityUserId, movieId: movie._id, rating, comment });
+            toast.success('Vote sent!');
+
+        } catch(error) {
+            toast.error("Could not submit vote. Try again, please.")
+            console.error(error)
+        }
         toggleRatingModal();
     }
 
