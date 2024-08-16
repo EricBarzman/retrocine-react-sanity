@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import MovieCard from "../MovieCard/MovieCard";
 import { useEffect, useState } from "react";
-import axios from '@/lib/axios';
+import { getMoviesFromSearch } from "@/lib/apis";
 
 function Search() {
 
@@ -9,7 +9,7 @@ function Search() {
   const [movies, setMovies] = useState([]);
 
   useEffect(()=> {
-    getMovieFromSearch(searchInput).then(result => setMovies(result));
+    getMoviesFromSearch(searchInput).then(result => setMovies(result));
   }, [searchInput])
 
   return (

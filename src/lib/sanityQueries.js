@@ -77,7 +77,7 @@ export const getMoviesByCountryQuery = `*[_type == "movie" && country._ref == $c
     "imageUrl": image.asset->url,
 }`
 
-export const getMoviesFromSearchQuery = `*[_type == "movie" && $searchInput in title] {
+export const getMoviesFromSearchQuery = `*[_type == "movie" && title match $searchInput] {
     _id,
     title,
     "slug": slug.current,
