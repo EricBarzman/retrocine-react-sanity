@@ -13,7 +13,7 @@ import Index from './Movies/Index/Index'
 import MoviePage from './Movies/MoviePage/MoviePage';
 import Pick_of_the_week from './Movies/PickOfTheWeek/Pick_of_the_week';
 import My_Account from './MyAccount/My_Account';
-import My_Favorites from './MyAccount/My_Favorites';
+import My_Favorites from './MyFavorites/My_Favorites';
 import Popular from '@/components/Movies/Popular/Popular';
 import Search from '@/components/Movies/Search/Search';
 

@@ -14,8 +14,8 @@ const favoriteMiddleware = (store) => (next) => (action) => {
     getUserInfo(firebaseUserId)
       .then(result =>
           getUserFavorites(result._id)
-            .then(response => store.dispatch(updateFavorites(response)))
-      )
+            .then((response) => store.dispatch(updateFavorites(response)))
+      );
   }
   next(action);
 };

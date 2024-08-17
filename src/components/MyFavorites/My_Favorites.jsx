@@ -6,11 +6,11 @@ function My_Favorites() {
 
     const dispatch = useDispatch();
 
-    const myFavorites = useSelector((state) => state.favorites.my_favorites);
-
     useEffect(() => {
-      dispatch({ type: 'FETCH_FAVORITES' });
-    }, [dispatch, myFavorites])
+      dispatch({ type: "FETCH_FAVORITES"});
+    }, [])
+
+    const myFavorites = useSelector((state) => state.favorites.my_favorites);
 
     return (
     <main className="text-white px-10 py-4">

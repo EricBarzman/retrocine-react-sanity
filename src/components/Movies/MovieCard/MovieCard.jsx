@@ -30,8 +30,8 @@ function MovieCard({ movie }) {
   }, [])
   
 
-  function addToMyFavorites() {   
-    createUserFavorite(sanityUserId, movie._id)
+  async function addToMyFavorites() {   
+    await createUserFavorite(sanityUserId, movie._id)
       .then(() => {
         toast.success('Added to my favorites');
         setIsFavorite(true);
@@ -44,17 +44,17 @@ function MovieCard({ movie }) {
   }
 
 
-  function removeFromMyFavorites() {
-    deleteUserFavorite(favoriteId)
-      .then(() => {
-        toast.success('Removed from my favorites');
-        dispatch({ type: 'FETCH_FAVORITES' });
-        // Little cheat to display card no longer as favorite, yet without rerendering
-        setIsFavorite(false);
-      })
-      .catch(() => {
-        toast.error('Could not remove from favorites')
-      })
+  async function removeFromMyFavorites() {
+    try {
+      await deleteUserFavorite(favoriteId)
+      toast.success('Removed from my favorites');
+      dispatch({ type: 'FETCH_FAVORITES' });
+      // Little cheat to display card no longer as favorite, yet without rerendering
+      setIsFavorite(false);
+    }
+    catch(error) {
+      toast.error('Could not remove from favorites')
+    }
   }
 
 
